@@ -1,0 +1,5 @@
+#!/bin/sh
+
+file="$(find ~/stuff/dox -type f | grep 'pdf' | dmenu -i -l 10)"
+
+[ -n "$file" ] && opener "$file"

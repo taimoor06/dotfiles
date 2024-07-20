@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Status bar module for disk space
+# $1 should be drive mountpoint, otherwise assumed /.
+
+printf "%s: %s\n" "🖥 " "$(df -h "/home" | awk ' /[0-9]/ {print $3 "/" $2}')"

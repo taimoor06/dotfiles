@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case "$(printf "United States\nNetherlands\nJapan\nKill VPN" | dmenu -l 5 -p "Select the country: ")" in
+"United States")
+sudo wg-quick up $(\ls -A /etc/wireguard | \grep wg-US | sed 's/.conf//' | shuf | head -n 1) >/dev/null 2>&1 &&
+		notify-send "VPN connected to United States"
+	;;
+"Netherlands")
+sudo wg-quick up $(\ls -A /etc/wireguard | \grep wg-NL | sed 's/.conf//' | shuf | head -n 1) >/dev/null 2>&1 &&
+		notify-send "Vpn connected to Netherlands"
+	;;
+"Japan")
+sudo wg-quick up $(\ls -A /etc/wireguard | \grep wg-JP | sed 's/.conf//' | shuf | head -n 1) >/dev/null 2>&1 &&
+		notify-send "Vpn connected to Japan"
+	;;
+"Kill VPN")
+sudo wg-quick down $(ip a | grep wg | awk '{print $2}' | head -n 1 | sed 's/://') >/dev/null 2>&1 &&
+		notify-send "VPN Disconnected"
+	;;
+esac

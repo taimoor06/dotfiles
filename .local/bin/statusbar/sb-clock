@@ -1,0 +1,8 @@
+#!/bin/env bash
+
+case $BLOCK_BUTTON in
+	1) setsid -f "$TERMINAL" -e calcurse ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+date "+%a %b %d %I:%M%p"

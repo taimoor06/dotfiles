@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# variables
+INVIDIOUS_INSTANCE="https://vid.puffyan.us" # some instances might not work
+
+input="$(true | dmenu -c -bw 2 -fn monospace:pixelsize=30)"
+
+if [ -n "$input" ]; then
+	# stop current song, clear playlist
+	mpc stop
+	mpc clear
+else
+	exit 0
+fi
+
+# make youtube search query
+query="$(printf '%s' "song audio $input" | tr ' ' '+' )"
+
+# search on invidous (youtube) instance for video id to make a url
+video_id="$(curl -s "$INVIDIOUS_INSTANCE/search?q=$query" | grep -Eo "watch\?v=.{11}" | head -n 1)"
+youtube_url="https://youtube.com/$video_id"
+
+# get url for bestaudio stream from the youtube video
+audio_url="$(yt-dlp -f bestaudio --get-url "$youtube_url")"
+
+if [ -n "$audio_url" ]; then
+# add the track to mpd and play
+	mpc add "$audio_url"
+	mpc play
+fi
+
+# Get youtube video title for system notification
+title=$(yt-dlp --get-title "$youtube_url")
+notify-send "Playing: " "$title"

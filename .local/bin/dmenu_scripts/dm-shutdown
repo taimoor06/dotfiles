@@ -1,0 +1,7 @@
+#!/bin/sh
+
+case "$(echo "Shutdown\nReboot\nLogout" | dmenu -i -l 9 -p "Choose:")" in
+	"Shutdown" ) choice="$(printf "No\nYes" | dmenu -i -l 9 -p "Really?" )"; [ $choice = Yes ] && halt -p ;;
+	"Reboot" ) choice1="$(printf "No\nYes" | dmenu  -i -l 9 -p "Really?" )"; [ $choice1 = Yes ] && halt --reboot ;;
+	"Logout" ) pkill -u $(whoami) ;;
+esac

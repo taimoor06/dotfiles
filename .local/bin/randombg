@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find $HOME/.local/walls -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1 | xargs -r xwallpaper --zoom

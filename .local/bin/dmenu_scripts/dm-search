@@ -1,0 +1,9 @@
+#!/bin/sh
+
+browser="brave"
+engine='https://priv.au/search?q='
+site="$(true | dmenu -p "Search: " )"
+
+if [ -n "$site" ] ; then
+	"$browser" --new-window "$engine$site"
+fi

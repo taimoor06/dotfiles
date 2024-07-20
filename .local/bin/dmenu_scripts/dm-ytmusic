@@ -1,0 +1,9 @@
+#!/bin/sh
+
+MUSIC_DIR="/home/taimoor/stuff/music/"
+URL=$(true | dmenu -p "Paste the link of Music: ")
+
+yt-dlp --embed-metadata -i -x -f bestaudio/best -o "$MUSIC_DIR%(title)s.%(ext)s" "$URL" 
+
+
+[ $? -eq 0 ] && notify-send "Finished Downloading 😉" || notify-send "Enter valid url or check your connection! 😥"

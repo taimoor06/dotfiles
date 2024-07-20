@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Set the browser command for Firefox
+browser="$BROWSER"
+
+# Function to handle URL navigation and web searches
+gotourl() {
+    $browser --new-window "$choice"
+}
+
+# Function to search YouTube
+searchyoutube() {
+    choice=$(echo "$choice" | hexdump -v -e '/1 " %02x"')
+    choice=$(echo "https://www.youtube.com/results?search_query=${choice% 0a}" | sed "s/[[:space:]]/%/g")
+    gotourl
+}
+
+# Use dmenu for user input
+choice=$(true | dmenu -p "Search YouTube:")
+
+# Check if there's input
+if [ -n "$choice" ]; then
+    # Main function for YouTube search
+    searchyoutube
+fi

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+browser="$BROWSER"
+engine='https://priv.au/search?q='
+
+sites="$(cat $HOME/.config/bookmarks | sed '/^$/d' | dmenu -l 10 | awk '{print $1}')"
+
+if [ -n "$sites" ] ; then
+	if [ -n "$( echo $sites | grep -E '^(http|https)://' )" ]; then
+		"$browser" --new-window "$sites"
+	else
+		"$browser" --new-window "$engine$sites"
+	fi
+fi

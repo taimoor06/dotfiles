@@ -1,0 +1,11 @@
+#!/bin/bash
+img="${XDG_DATA_HOME:-$HOME/.local/share}/bg"
+
+location="$(readlink -f "$1")" &&
+
+case "$(file --mime-type -b "$location")" in
+	image/* ) cp "$location" "$img" ;;
+	inode/directory ) cp $(find .local/walls -regex '.*.\(jpg\|jpeg\|png\|gif\)' | \cat | shuf -n 1) $img ;;
+esac
+
+xwallpaper --zoom $img && wal -i $img >/dev/null 2>&1

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$HOME" = "$(pwd)" ]; then
+	choice="$(fd . ~/.local/bin ~/.local/src/ ~/.config/ --type f | sk --height 60% --reverse --border )"
+else
+	choice="$(fd . --type f | sk --height 60% --reverse --border --preview 'bat --style=full --color=always {}' )"
+fi
+
+[ -n "$choice" ] && opener "$choice"

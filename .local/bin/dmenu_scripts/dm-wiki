@@ -1,0 +1,10 @@
+#!/bin/sh
+
+site="https://wiki.archlinux.org/index.php?search="  
+
+# Prompt the user for a search query using dmenu
+query=$(true | dmenu -i -p "Search:")
+
+if [ -n "$query" ]; then
+	$BROWSER --new-window "$site$query"
+fi

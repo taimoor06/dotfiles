@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+case $BLOCK_BUTTON in
+	1) setsid -f "$TERMINAL" -e htop ;;
+	3) notify-send "Since" "$(uptime -s)" ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+uptime -p | sed 's/up//'
