@@ -5,7 +5,6 @@ set show-all-if-ambiguous On
 set completion-ignore-case On
 set completion-display-width 0
 set completion-query-items 1000
-set -o vi
 
 set echo-control-characters Off
 

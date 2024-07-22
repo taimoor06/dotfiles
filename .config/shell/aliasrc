@@ -1,40 +1,13 @@
 #!/bin/bash
 ###---------- ALIASES ----------###
 
-randomman(){
-	man -k . | awk '{print $1}'  | sk --height 40% --reverse | xargs -r man
-}
-
 uu(){
 	unset HISTFILE 
 	PROMPT='󰗹 %B%F{10} %B%F{015}%~%B%F{006} 󰅂%b%F{015} '
 	clear
 }
 
-bulkrename() {
-    tmpfile_old="$(mktemp)"
-    tmpfile_new="$(mktemp)"
-
-    [ -n "$fs" ] && fs=$(basename -a $fs) || fs=$(\ls)
-
-    echo "$fs" > "$tmpfile_old"
-    echo "$fs" > "$tmpfile_new"
-    $EDITOR "$tmpfile_new"
-
-    [ "$(wc -l < "$tmpfile_old")" -eq "$(wc -l < "$tmpfile_new")" ] || { rm -f "$tmpfile_old" "$tmpfile_new"; exit 1; }
-
-    paste "$tmpfile_old" "$tmpfile_new" | while IFS="$(printf '\t')" read -r src dst
-    do
-        [ "$src" = "$dst" ] || [ -e "$dst" ] || mv -- "$src" "$dst"
-    done
-
-    rm -f "$tmpfile_old" "$tmpfile_new"
-}
-
 alias cpy="xclip -selection c"
-alias h="cat ~/.cache/zsh/history | cut -c 8- | sort | uniq |sk | tr '\\n' ' ' | cpy"
-
-alias mm="randomman" 
 alias update="sudo pacman -Syyuu"
 alias p="sudo pacman"
 
@@ -62,8 +35,6 @@ alias ff="yazi"
 alias nb="newsboat"
 alias ka="killall"
 alias grep="grep --color=always"
-alias tree="tree -C | less"
-alias dwmake="sudo make clean install;xdotool key super+shift+r"
 
 alias \
 	cp="cp -iv" \
