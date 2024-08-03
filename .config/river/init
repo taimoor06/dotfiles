@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+# This is the example configuration file for river.
+#
+# If you wish to edit this, you will probably want to copy it to
+# $XDG_CONFIG_HOME/river/init or $HOME/.config/river/init first.
+#
+# See the river(1), riverctl(1), and rivertile(1) man pages for complete
+# documentation.
+
+# Note: the "Super" modifier is also known as Logo, GUI, Windows, Mod4, etc.
+
+for i in $(seq 1 9)
+do
+    tags=$((1 << ($i - 1)))
+
+    # Super+[1-9] to focus tag [0-8]
+    riverctl map normal Super $i set-focused-tags $tags
+
+    # Super+Shift+[1-9] to tag focused view with tag [0-8]
+    riverctl map normal Super+Shift $i set-view-tags $tags
+
+    # Super+Control+[1-9] to toggle focus of tag [0-8]
+    riverctl map normal Super+Control $i toggle-focused-tags $tags
+
+    # Super+Shift+Control+[1-9] to toggle tag [0-8] of focused view
+    riverctl map normal Super+Shift+Control $i toggle-view-tags $tags
+done
+
+# Super+0 to focus all tags
+# Super+Shift+0 to tag focused view with all tags
+all_tags=$(((1 << 32) - 1))
+riverctl map normal Super 0 set-focused-tags $all_tags
+riverctl map normal Super+Shift 0 set-view-tags $all_tags
+
+# Super+Space to toggle float
+#riverctl map normal Super Space toggle-float
+
+
+# Declare a passthrough mode. This mode has only a single mapping to return to
+# normal mode. This makes it useful for testing a nested wayland compositor
+riverctl declare-mode passthrough
+
+# Super+F11 to enter passthrough mode
+riverctl map normal Super F11 enter-mode passthrough
+
+# Super+F11 to return to normal mode
+riverctl map passthrough Super F11 enter-mode normal
+
+# Set background and border color
+riverctl background-color 0x000000
+riverctl border-color-focused 0x93a1a1
+riverctl border-color-unfocused 0x586e75
+
+# Set keyboard repeat rate
+riverctl set-repeat 50 200
+
+# Make all views with an app-id that starts with "float" and title "foo" start floating.
+riverctl rule-add -app-id 'float*' -title 'foo' float
+
+# Make all views with app-id "bar" and any title use client-side decorations
+riverctl rule-add -app-id "bar" csd
+
+# Set the default layout generator to be rivertile and start it.
+# River will send the process group of the init executable SIGTERM on exit.
+riverctl default-layout rivertile
+rivertile -view-padding 3 -outer-padding 3 &
+
+[ -z "$(pidof yambar)" ] && riverctl spawn "yambar &"
+[ -z "$(pidof mpd)" ] && riverctl spawn "mpd & disown"
+[ -z "$(pidof swaybg)" ] && riverctl spawn "swaybg -m fill -i ~/.local/walls/wallhaven-d6yrzg.png & disown "
+riverctl spawn "foot --server"
+riverctl spawn "dunst"
+
+. "/home/taimoor/.config/river/binds"
+. "/home/taimoor/.config/river/input"
+
+scratch_tag=$((1 << 20 ))
+
+riverctl map normal Super P toggle-focused-tags ${scratch_tag}		# toggle the scratchpad
+riverctl map normal Super+Shift P set-view-tags ${scratch_tag}		# send windows to the scratchpad
+
+# Set spawn tagmask to ensure new windows do not have the scratchpad tag unless explicitly set.
+all_but_scratch_tag=$(( ((1 << 32) - 1) ^ $scratch_tag ))
+riverctl spawn-tagmask ${all_but_scratch_tag}

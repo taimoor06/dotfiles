@@ -1,0 +1,94 @@
+#!/bin/sh
+
+riverctl map normal Super E spawn "pcmanfm" 
+riverctl map normal Super W spawn "dm-search" 
+
+riverctl map normal Super Equal spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+'
+riverctl map normal Super Minus spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-'
+
+riverctl map normal Super+Shift R spawn "$HOME/.config/river/init"
+riverctl map normal Super B spawn "browser"
+riverctl map normal Super D spawn "rofi -show drun"
+riverctl map normal Super Return spawn footclient
+riverctl map normal Super Q close
+riverctl map normal Super+Shift E exit
+
+# Bingings for my scripts
+riverctl map normal Super+Shift N spawn "footclient -e newsboat"
+riverctl map normal Super N spawn "footclient -e ncmpcpp"
+riverctl map normal Super P spawn "mpc toggle"
+riverctl map normal Super R spawn "dm-dox"
+riverctl map normal Super Semicolon spawn "dm-web"
+
+
+# Various media key mapping examples for both normal and locked mode which do
+# not have a modifier
+for mode in normal locked
+do
+    # Control pulse audio volume with pamixer (https://github.com/cdemoulins/pamixer)
+    riverctl map $mode None XF86AudioRaiseVolume  spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+'
+    riverctl map $mode None XF86AudioLowerVolume  spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-'
+    riverctl map $mode None XF86AudioMute         spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%'
+    
+    riverctl map $mode None XF86AudioPlay  spawn 'mpc toggle'
+    riverctl map $mode None XF86AudioPrev  spawn 'mpc prev'
+    riverctl map $mode None XF86AudioNext  spawn 'mpc next'
+
+    # Control screen backlight brightness with brightnessctl (https://github.com/Hummer12007/brightnessctl)
+    riverctl map $mode None XF86MonBrightnessUp   spawn 'brightnessctl set +5%'
+    riverctl map $mode None XF86MonBrightnessDown spawn 'brightnessctl set 5%-'
+done
+
+riverctl map normal Super J focus-view next
+riverctl map normal Super K focus-view previous
+
+# Super+Shift+J and Super+Shift+K to swap the focused view with the next/previous
+# view in the layout stack
+riverctl map normal Super+Shift J swap next
+riverctl map normal Super+Shift K swap previous
+
+# Super+Period and Super+Comma to focus the next/previous output
+riverctl map normal Super Period focus-output next
+riverctl map normal Super Comma focus-output previous
+
+# Super+Shift+{Period,Comma} to send the focused view to the next/previous output
+riverctl map normal Super+Shift Period send-to-output next
+riverctl map normal Super+Shift Comma send-to-output previous
+
+# Super+Return to bump the focused view to the top of the layout stack
+riverctl map normal Super Space zoom
+
+# Super+H and Super+L to decrease/increase the main ratio of rivertile(1)
+riverctl map normal Super H send-layout-cmd rivertile "main-ratio -0.05"
+riverctl map normal Super L send-layout-cmd rivertile "main-ratio +0.05"
+
+# Super+Shift+H and Super+Shift+L to increment/decrement the main count of rivertile(1)
+riverctl map normal Super+Shift H send-layout-cmd rivertile "main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd rivertile "main-count -1"
+
+# Super+Alt+{H,J,K,L} to move views
+riverctl map normal Super+Alt H move left 100
+riverctl map normal Super+Alt J move down 100
+riverctl map normal Super+Alt K move up 100
+riverctl map normal Super+Alt L move right 100
+
+# Super+Alt+Control+{H,J,K,L} to snap views to screen edges
+riverctl map normal Super+Alt+Control H snap left
+riverctl map normal Super+Alt+Control J snap down
+riverctl map normal Super+Alt+Control K snap up
+riverctl map normal Super+Alt+Control L snap right
+
+# Super + Left Mouse Button to move views
+riverctl map-pointer normal Super BTN_LEFT move-view
+
+# Super + Right Mouse Button to resize views
+riverctl map-pointer normal Super BTN_RIGHT resize-view
+
+# Super + Middle Mouse Button to toggle float
+riverctl map-pointer normal Super BTN_MIDDLE toggle-float
+
+# Super+F to toggle fullscreen
+riverctl map normal Super F toggle-fullscreen
+
+
+riverctl map normal Super T toggle-float

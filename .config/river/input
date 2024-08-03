@@ -1,0 +1,4 @@
+riverctl input pointer-2-8-AlpsPS/2_ALPS_GlidePoint tap enabled
+riverctl input pointer-2-8-AlpsPS/2_ALPS_GlidePoint natural-scroll enabled
+riverctl input pointer-2-8-AlpsPS/2_ALPS_GlidePoint disable-while-typing disabled
+riverctl input pointer-2-8-AlpsPS/2_ALPS_GlidePoint focus-follows-cursor enabled
