@@ -7,7 +7,7 @@ riverctl map normal Super Equal spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+
 riverctl map normal Super Minus spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-'
 
 riverctl map normal Super+Shift R spawn "$HOME/.config/river/init"
-riverctl map normal Super B spawn "browser"
+riverctl map normal Super B spawn "firefox"
 riverctl map normal Super D spawn "rofi -show drun"
 riverctl map normal Super Return spawn footclient
 riverctl map normal Super Q close
@@ -15,12 +15,16 @@ riverctl map normal Super+Shift E exit
 
 # Bingings for my scripts
 riverctl map normal Super+Shift N spawn "footclient -e newsboat"
-riverctl map normal Super N spawn "footclient -e ncmpcpp"
+riverctl map normal Super M spawn "footclient -e ncmpcpp"
 riverctl map normal Super P spawn "mpc toggle"
 riverctl map normal Super R spawn "dm-dox"
 riverctl map normal Super Semicolon spawn "dm-web"
+riverctl map normal Super Delete spawn "dm-kill"
+riverctl map normal Super+Shift S spawn "dm-song"
+riverctl map normal Super+Shift X spawn "dm-shutdown"
 
-
+riverctl map normal Super   Y spawn "dm-yt"
+riverctl map normal Super+Shift Y spawn "dm-ytmusic"
 # Various media key mapping examples for both normal and locked mode which do
 # not have a modifier
 for mode in normal locked

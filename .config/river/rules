@@ -1,0 +1,7 @@
+#!/bin/sh
+
+apps="firefox ArmCord org.pwmt.zathura lutris org.pulseaudio.pavucontrol obsidian"
+
+for list in $apps; do
+	riverctl rule-add -app-id "$list" ssd
+done

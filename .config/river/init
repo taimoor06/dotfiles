@@ -49,8 +49,11 @@ riverctl map passthrough Super F11 enter-mode normal
 
 # Set background and border color
 riverctl background-color 0x000000
-riverctl border-color-focused 0x93a1a1
-riverctl border-color-unfocused 0x586e75
+riverctl border-color-focused 0x81A1C1
+
+#riverctl border-color-unfocused 0x586e75
+riverctl border-color-unfocused 0x888888
+riverctl border-width 3
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 200
@@ -66,20 +69,21 @@ riverctl rule-add -app-id "bar" csd
 riverctl default-layout rivertile
 rivertile -view-padding 3 -outer-padding 3 &
 
-[ -z "$(pidof yambar)" ] && riverctl spawn "yambar &"
-[ -z "$(pidof mpd)" ] && riverctl spawn "mpd & disown"
-[ -z "$(pidof swaybg)" ] && riverctl spawn "swaybg -m fill -i ~/.local/walls/wallhaven-d6yrzg.png & disown "
-riverctl spawn "foot --server"
-riverctl spawn "dunst"
+autostart="yambar mpd dunst"
+
+for program in $autostart; do
+	pidof -sx "$program" || "$program" &
+done
+
+if [ -z "$(pidof python3)" ]; then
+riverctl spawn "$HOME/.local/share/venv/bin/python3 ~/.local/src/youtube-local-master/server.py &"
+fi
+riverctl spawn "foot --server &"
+riverctl spawn "xrdb -merge ~/.config/x11/xresources &"
+
+[ -z "$(pidof xss-lock)" ] && riverctl spawn "xss-lock -- swaylock"
+[ -z "$(pidof wbg)" ] && riverctl spawn "setbg"
 
 . "/home/taimoor/.config/river/binds"
 . "/home/taimoor/.config/river/input"
-
-scratch_tag=$((1 << 20 ))
-
-riverctl map normal Super P toggle-focused-tags ${scratch_tag}		# toggle the scratchpad
-riverctl map normal Super+Shift P set-view-tags ${scratch_tag}		# send windows to the scratchpad
-
-# Set spawn tagmask to ensure new windows do not have the scratchpad tag unless explicitly set.
-all_but_scratch_tag=$(( ((1 << 32) - 1) ^ $scratch_tag ))
-riverctl spawn-tagmask ${all_but_scratch_tag}
+. "/home/taimoor/.config/river/rules"
