@@ -1,0 +1,15 @@
+#!/bin/sh
+
+[ "$1" = "battery" ] && notify-send "$(acpi -b | sed 's/Battery 0: //')"
+
+iface=$(ip a | grep wg | awk '{print $2}' | head -n 1 | sed 's/://')
+
+COUNTRY(){
+	case "$iface" in
+		wg-NL) echo "VPN is connected to Netherlands" ;;
+		wg-US) echo "VPN is connected to United Stated" ;;
+		wg-JP) echo "VPN is connected to Japan" ;;
+	esac
+}
+
+[ "$1" = "vpn" ] && notify-send "$(COUNTRY)"
