@@ -1,7 +1,11 @@
 #!/bin/sh
 
-apps="firefox ArmCord org.pwmt.zathura lutris org.pulseaudio.pavucontrol obsidian"
+riverctl rule-add -app-id "ONLYOFFICE Desktop Editors" ssd
+apps="xdg-desktop-portal-gtk nemo  thunar bleachbit nwg-look swappy guvcview dev.zed.Zed LibreWolf thorium-browser brave-browser firefox org.pwmt.zathura lutris org.pulseaudio.pavucontrol obsidian localsend_app"
 
 for list in $apps; do
 	riverctl rule-add -app-id "$list" ssd
 done
+
+riverctl xcursor-theme 'capitaine-cursors' 30
+riverctl hide-cursor when-typing enabled

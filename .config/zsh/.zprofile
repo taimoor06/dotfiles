@@ -1,10 +1,11 @@
-export PATH="$PATH:$(find ~/.local/bin -type d | paste -sd ':' -)"
+export PATH="$PATH:$(find ~/.local/bin -type d | paste -sd ':' -):$HOME/.local/share/venv/bin/"
 export ZDOTDIR="$HOME/.config/zsh"
 
 export BROWSER="brave"
 export MANPAGER="less"
 export LESS="--RAW-CONTROL-CHARS"
 
+# To clean up my home folder
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -25,20 +26,27 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export MPD_HOST="/tmp/mpd-socket"
 export QT_QPA_PLATFORMTHEME="qt6ct"
-export MBSYNCRC="$XDG_CONFIG_HOME/isync/mbsyncrc"
+export XCURSOR_PATH=/usr/share/icons:$XDG_DATA_HOME/icons
+export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
+export RENPY_PATH_TO_SAVES="$XDG_DATA_HOME/renpy"
 
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+	export TERMINAL="footclient"
+fi
+export VDPAU_DRIVER=va_gl
+export LIBVA_DRIVER_NAME=iHD
 export LESS="R"
-export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
-export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
-export LESS_TERMCAP_me="$(printf '%b' '[0m')"
-export LESS_TERMCAP_so="$(printf '%b' '[01;44;97m')"
-export LESS_TERMCAP_se="$(printf '%b' '[0m')"
-export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
-export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
+export VDPAU_DRIVER=va_gl
+export LIBVA_DRIVER_NAME=iHD
 
 export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 export MOZ_USE_XINPUT2=1                  # Mozilla smooth scrolling/touchpads.
 
+gsettings set org.gnome.desktop.interface gtk-theme "Pop-dark"
+gsettings set org.gnome.desktop.interface icon-theme "Pop"
+gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursors'
+
 # Start graphical server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+#[ "$(tty)" = "/dev/tty1" ] &&  exec river

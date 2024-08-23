@@ -1,30 +1,40 @@
 #!/bin/sh
 
-riverctl map normal Super E spawn "pcmanfm" 
-riverctl map normal Super W spawn "dm-search" 
-
+# Keybinding for volume
 riverctl map normal Super Equal spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+'
 riverctl map normal Super Minus spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-'
+riverctl map normal Super Plus spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+'
+riverctl map normal Super Underscore spawn 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-'
 
-riverctl map normal Super+Shift R spawn "$HOME/.config/river/init"
-riverctl map normal Super B spawn "firefox"
-riverctl map normal Super D spawn "rofi -show drun"
-riverctl map normal Super Return spawn footclient
 riverctl map normal Super Q close
-riverctl map normal Super+Shift E exit
+riverctl map normal Super+Shift Delete exit
 
-# Bingings for my scripts
+riverctl map normal Super E spawn "pcmanfm" 
+riverctl map normal Super W spawn "dm-search" 
+riverctl map normal Super B spawn "$BROWSER"
+riverctl map normal Super X spawn "localsend"
+riverctl map normal Super P spawn "mpc toggle"
+
 riverctl map normal Super+Shift N spawn "footclient -e newsboat"
 riverctl map normal Super M spawn "footclient -e ncmpcpp"
-riverctl map normal Super P spawn "mpc toggle"
+riverctl map normal Super N spawn "footclient -e nvim -c VimwikiIndex"
+riverctl map normal Super Return spawn "footclient"
+
+riverctl map normal Super+Shift R spawn "$HOME/.config/river/init"
+riverctl map normal Super D spawn "tofi-drun --drun-launch=true"
+
+# Bingings for my scripts
 riverctl map normal Super R spawn "dm-dox"
 riverctl map normal Super Semicolon spawn "dm-web"
-riverctl map normal Super Delete spawn "dm-kill"
+riverctl map normal Super Delete spawn "dm-kill -r"
+riverctl map normal Super+Shift E spawn "dm-emoji"
 riverctl map normal Super+Shift S spawn "dm-song"
 riverctl map normal Super+Shift X spawn "dm-shutdown"
-
+riverctl map normal Super O spawn "file-open -r"
 riverctl map normal Super   Y spawn "dm-yt"
 riverctl map normal Super+Shift Y spawn "dm-ytmusic"
+riverctl map normal Super End spawn "grimshot"
+
 # Various media key mapping examples for both normal and locked mode which do
 # not have a modifier
 for mode in normal locked
@@ -38,7 +48,6 @@ do
     riverctl map $mode None XF86AudioPrev  spawn 'mpc prev'
     riverctl map $mode None XF86AudioNext  spawn 'mpc next'
 
-    # Control screen backlight brightness with brightnessctl (https://github.com/Hummer12007/brightnessctl)
     riverctl map $mode None XF86MonBrightnessUp   spawn 'brightnessctl set +5%'
     riverctl map $mode None XF86MonBrightnessDown spawn 'brightnessctl set 5%-'
 done
@@ -88,11 +97,14 @@ riverctl map-pointer normal Super BTN_LEFT move-view
 # Super + Right Mouse Button to resize views
 riverctl map-pointer normal Super BTN_RIGHT resize-view
 
-# Super + Middle Mouse Button to toggle float
-riverctl map-pointer normal Super BTN_MIDDLE toggle-float
+# Super+Alt+Shift+{H,J,K,L} to resize views
+riverctl map normal Super+Alt+Shift H resize horizontal -100
+riverctl map normal Super+Alt+Shift J resize vertical 100
+riverctl map normal Super+Alt+Shift K resize vertical -100
+riverctl map normal Super+Alt+Shift L resize horizontal 100
 
 # Super+F to toggle fullscreen
 riverctl map normal Super F toggle-fullscreen
 
-
+# Super+T to toggle float
 riverctl map normal Super T toggle-float

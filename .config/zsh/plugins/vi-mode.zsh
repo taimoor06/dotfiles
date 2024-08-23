@@ -35,7 +35,8 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-bindkey -s '^f' '^ucd "$(dirname "$(sk)")"\n'
+#bindkey -s '^f' '^ucd "$(dirname "$(fd -H . -tf | fzf)")"\n'
+bindkey -s '^f' '^ucd "$(zi)"\n'
 
 # Edit line in vim with ctrl-e:
 #autoload edit-command-line; zle -N edit-command-line

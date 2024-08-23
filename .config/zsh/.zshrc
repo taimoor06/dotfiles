@@ -27,13 +27,11 @@ _comp_options+=(globdots)		# Include hidden files.
 export LESSHISTFILE="-"
 export EDITOR="nvim"
 export VISUAL="nvim"
-export TERMINAL="st"
 export FILES="thunar"
-export PAGER="less"
-export BAT_THEME="ansi"
+export PAGER="less -r"
+export BAT_THEME="gruvbox-dark"
 
 ###---------- PLUGINS ----------###
-
 source "/usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 source "$HOME/.config/zsh/plugins/vi-mode.zsh"
 source "$HOME/.config/shell/aliasrc"
@@ -41,4 +39,18 @@ source "$HOME/.config/shell/aliasrc"
 alias ez="nvim $HOME/.config/zsh/.zshrc"
 alias ezp="nvim $HOME/.config/zsh/.zprofile"
 
-source /home/taimoor/.config/broot/launcher/bash/br
+###--------- Colored Manpages ---------##
+
+export LESS_TERMCAP_mb="$(printf '%b' '31m')"
+export LESS_TERMCAP_md="$(printf '%b' '[36m')"
+export LESS_TERMCAP_me="$(printf '%b' '[0m')"
+export LESS_TERMCAP_so="$(printf '%b' '\e[1;3;40;33m')"
+export LESS_TERMCAP_se="$(printf '%b' '[0m')"
+export LESS_TERMCAP_us="$(printf '%b' '[32m')"
+export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
+
+#eval "$(starship init zsh)"
+#echo "Battery: $(sb-battery)"
+
+#echo "You arent the the only one SUFFERING\nWhy care? Millions die silently like you will."
+#fastfetch -l small -c ~/.config/fastfetch/small.json
