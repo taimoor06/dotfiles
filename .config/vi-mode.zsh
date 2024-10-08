@@ -35,8 +35,10 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-#bindkey -s '^f' '^ucd "$(dirname "$(fd -H . -tf | fzf)")"\n'
-bindkey -s '^f' '^ucd "$(zi)"\n'
+#bindkey -s '^f' '^ucd "$(dirname "$(fd --type d -H . -tf | fzf)")"\n'
+bindkey -s '^f' '^uzi\n'
+bindkey -s '^o' '^ufile-open\n'
+#bindkey -s '^F' 'killall foot && foot --server &'
 
 # Edit line in vim with ctrl-e:
 #autoload edit-command-line; zle -N edit-command-line
@@ -106,12 +108,4 @@ else
   bindkey -M vicmd "^[3;5~" delete-char
 fi
 
-# [Ctrl-RightArrow] - move forward one word
-bindkey -M emacs '^[[1;5C' forward-word
-bindkey -M viins '^[[1;5C' forward-word
-bindkey -M vicmd '^[[1;5C' forward-word
-# [Ctrl-LeftArrow] - move backward one word
-bindkey -M emacs '^[[1;5D' backward-word
-bindkey -M viins '^[[1;5D' backward-word
-bindkey -M vicmd '^[[1;5D' backward-word
-
+bindkey -M viins '^W' backward-kill-word

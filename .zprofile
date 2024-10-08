@@ -1,6 +1,20 @@
 export PATH="$PATH:$(find ~/.local/bin -type d | paste -sd ':' -)"
 export ZDOTDIR="$HOME/.config/zsh"
 
+export LESSHISTFILE="-"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export FILES="thunar"
+export PAGER="less -r"
+export BAT_THEME="gruvbox-dark"
+
+# History in cache directory:
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE="$HOME/.cache/zsh/history"
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+
 export BROWSER="brave"
 export MANPAGER="less"
 export LESS="--RAW-CONTROL-CHARS"
@@ -27,13 +41,14 @@ export MPD_HOST="/tmp/mpd-socket"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 export MBSYNCRC="$XDG_CONFIG_HOME/isync/mbsyncrc"
 
-export LESS="R"
-export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
-export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+###--------- Colored Manpages ---------##
+
+export LESS_TERMCAP_mb="$(printf '%b' '31m')"
+export LESS_TERMCAP_md="$(printf '%b' '[36m')"
 export LESS_TERMCAP_me="$(printf '%b' '[0m')"
-export LESS_TERMCAP_so="$(printf '%b' '[01;44;97m')"
+export LESS_TERMCAP_so="$(printf '%b' '\e[1;3;40;33m')"
 export LESS_TERMCAP_se="$(printf '%b' '[0m')"
-export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+export LESS_TERMCAP_us="$(printf '%b' '[32m')"
 export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
 
